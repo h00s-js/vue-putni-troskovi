@@ -1,0 +1,122 @@
+body {
+  margin-bottom: 50px;
+  background-color: #212d3b;
+  padding-top: 5rem;
+  color: #ccc;
+}
+
+.nav-bg {
+  background-color: #171a21;
+}
+
+.nav-fg {
+  color: #b8b6b4;
+}
+
+.navbar .logo {
+  margin-right: 1em;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  background-color: #171a21;
+  color: #8f98a0;
+  font-size: 12px;
+}
+
+.footer a:link, .footer a:visited {
+  color: #8f98a0;
+}
+
+.footer a:hover, .footer a:active {
+  color: white;
+}
+
+.footer .logo {
+  margin-right: 0.4em;
+  margin-top: -0.2em;
+}
+
+
+.box {
+  border: 1px solid black;
+  background-color: #39617c;
+  color: white;
+  padding: 1em;
+}
+
+.box h2 {
+  font-size: 17px;
+  letter-spacing: 2px;
+}
+
+.light-box {
+  border: 1px solid #2a485c;
+  background-color: #4c82a6;
+  color: white;
+  padding: 1em;
+}
+
+.light-box h3 {
+  font-size: 14px;
+}
+
+.light-box button {
+  font-size: 12px;
+}
+
+.progress {
+  position: relative;
+}
+
+.progress-bar-title {
+  position: absolute;
+  text-align: center;
+  line-height: 16px;
+  overflow: hidden;
+  color: #000;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+.centered {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 0.05em 1em 0.05em 1em;
+  text-align: center;
+}
+
+p {
+  line-height: 1.4;
+}
+
+@media print {
+  #options {
+    display: none;
+  }
+  .navbar, .footer {
+    display: none;
+  }
+  body {
+    margin: 0.5em;
+    padding: 0.2em;
+    color: #000;
+  }
+}
+

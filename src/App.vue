@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div id="options">
+  <div id="app" class="container">
+    <div id="options" class="box rounded mb-3">
       Ime:<br>
       <input type="text" v-model="name"><br>
       Adresa rada:<br>
@@ -57,7 +57,7 @@
 
       <p>Za točnost i istinitost podataka iz ovog izvješća zaposlenik jamči potpisom pod punom krivičnom i materijalnom odgovornošću. Naknada po prijeđenom kilometru: 0,75 kn (stavak 6. ili st.8. čl. 67.)</p>
       <p><strong>Na ime naknade troška prijevoza potražujem: {{ cost }}kn</strong></p>
-      <p>Datum podnošenja izvješćaa: {{ date }}</p>
+      <p>Datum podnošenja izvješća: {{ date }}</p>
 
       <p class="right">_________________<br>(potpis zaposlenika)</p>
 
@@ -135,31 +135,6 @@ export default {
 </script>
 
 <style>
-@media print {
-  #options {
-    display: none;
-  }
-}
-
-.centered {
-  text-align: center;
-}
-
-.right {
-  text-align: right;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid black;
-  padding: 0.05em 1em 0.05em 1em;
-  text-align: center;
-}
-
-p {
-  line-height: 1.2;
-}
+@import './assets/css/bootstrap.min.css';
+@import './assets/css/style.css';
 </style>
