@@ -1,53 +1,96 @@
 <template>
   <div id="app" class="container">
     <div id="options" class="box rounded mb-3">
-      Ime:<br>
-      <input type="text" v-model="name"><br>
-      Adresa rada:<br>
-      <input type="text" v-model="addressWork"><br>
-      Adresa stanovanja:<br>
-      <input type="text" v-model="addressHome"><br>
-      Udaljenost:<br>
-      <input type="text" v-model="distance"><br>
-      Mjesec:<br>
-      <input type="text" v-model="formMonth"><br>
-      Godina:<br>
-      <input type="text" v-model="formYear"><br>
-      Preskoči dane:<br>
-      <input type="text" v-model="skipDays"><br>
+      <div class="row mb-3">
+        <div class="col-4 col-md-4">
+          Prezime i ime:<br>
+          <input type="text" v-model="name"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+          Adresa prebivališta:<br>
+          <input type="text" v-model="address"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-4 col-md-4">
+          Udaljenost pri dolasku (km):<br>
+          <input type="text" v-model="distanceIn"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+          Udaljenost pri odlasku (km):<br>
+          <input type="text" v-model="distanceOut"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-4 col-md-4">
+          Mjesec:<br>
+          <input type="text" v-model="month"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+          Godina:<br>
+          <input type="text" v-model="year"><br>
+        </div>
+
+        <div class="col-4 col-md-4">
+          Preskoči dane:<br>
+          <input type="text" v-model="skipDays"><br>
+        </div>
+      </div>
+
       Datum podnošenja:<br>
       <input type="text" v-model="date"><br><br>
-      <button @click="calculateFillTable">Generiraj!</button>
+      <button class="btn btn-primary" @click="calculateFillTable">Generiraj!</button>
       <hr>
     </div>
     <div id="generated-form">
       <div class="centered">
-        <p>IZVJEŠĆE O PRIJEĐENOJ UDALJENOSTI<br>
-        PRI DOLASKU NA POSAO I ODLASKU S POSLA</p>
+        <h6 class="mb-0"><b>IZVJEŠĆE O PRIJEĐENOJ UDALJENOSTI PRI DOLASKU NA POSAO<br>
+        I ODLASKU S POSLA za mjesec {{ month }}/{{ year }}</b></h6>
+        <small>(stavak 12. čl. 67. TKU za službenike i namještenike u javnim službama)</small>
       </div>
 
-      <p>
-        Ime i prezime zaposlenika: <strong>{{ name }}</strong><br>
-        Adresa rada: {{ addressWork }}<br>
-        Adresa stanovanja: {{ addressHome }}<br>
+      <p class="mt-4">
+        Prezime i ime zaposlenika: <strong>{{ name }}</strong><br>
+        Adresa prebivališta-boravišta: {{ address }}<br>
       </p>
 
       <table>
         <thead>
           <tr>
+            <th></th>
             <th>Datum</th>
-            <th>Broj prijeđenih<br>kilometara pri dolasku</th>
-            <th>Broj prijeđenih<br>kilometara pri odlasku</th>
+            <th>Broj KM<br>pri dolasku</th>
+            <th>Broj KM<br> pri odlasku</th>
             <th>Prijevozno sredstvo</th>
             <th>Potpis</th>
           </tr>
         </thead>
         <tfoot>
           <tr>
-            <td><strong>UKUPNO:</strong></td>
-            <td>{{ totalDistance.toFixed(2) }}</td>
-            <td>{{ totalDistance.toFixed(2) }}</td>
-            <td>{{ (totalDistance * 2).toFixed(2) }}</td>
+            <td></td>
+            <td><strong>Ukupno KM:</strong></td>
+            <td>{{ totalDistanceIn.toFixed(2) }}</td>
+            <td>{{ totalDistanceOut.toFixed(2) }}</td>
+            <td><b>{{ (totalDistanceIn + totalDistanceOut).toFixed(2) }} km x 0,75</b></td>
+            <td><b>= {{ this.cost }} kn</b></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><strong>Ukupno<br>DANA rada:</strong></td>
+            <td>{{ workingDays }}</td>
+            <td>{{ workingDays }}</td>
+            <td></td>
             <td></td>
           </tr>
         </tfoot>
@@ -55,15 +98,13 @@
         </tbody>
       </table>
 
-      <p>Za točnost i istinitost podataka iz ovog izvješća zaposlenik jamči potpisom pod punom krivičnom i materijalnom odgovornošću. Naknada po prijeđenom kilometru: 0,75 kn (stavak 6. ili st.8. čl. 67.)</p>
-      <p><strong>Na ime naknade troška prijevoza potražujem: {{ cost }}kn</strong></p>
+      <p class="mt-3">Za točnost i istinitost podataka iz ovog izvješća zaposlenik jamči pod punom krivičnom i materijalnom odgovornošću.</p>
+
       <p>Datum podnošenja izvješća: {{ date }}</p>
 
-      <p class="right">_________________<br>(potpis zaposlenika)</p>
-
-      <p><strong>Odobreni iznos za isplatu _________________ kn</strong></p>
-
-      <p class="right">____________________<br>(za Školu odobrava)</p>
+      <p class="right">Potpis zaposlenika:</p>
+      <p></p>
+      <p class="right">_________________</p>
 
     </div>
   </div>
@@ -75,13 +116,15 @@ export default {
   data () {
     return {
       name: '',
-      addressWork: '',
-      addressHome: '',
-      distance: 0,
-      totalDistance: 0,
+      address: '',
+      distanceIn: 0,
+      distanceOut: 0,
+      totalDistanceIn: 0,
+      totalDistanceOut: 0,
+      workingDays: 0,
       date: this.getDate(),
-      formMonth: this.getMonth(),
-      formYear: this.getYear(),
+      month: this.getMonth(),
+      year: this.getYear(),
       skipDays: '',
       cost: '',
       table: ''
@@ -115,20 +158,25 @@ export default {
     },
     calculateFillTable() {
       this.table = '';
-      this.totalDistance = 0;
-      let noOfDays = new Date(this.formYear, this.formMonth-1, 0).getDate();
+      this.totalDistanceIn = 0;
+      this.totalDistanceOut = 0;
+      let noOfDays = new Date(this.year, this.month-1, 0).getDate();
       let skipDays = JSON.parse('[' + this.skipDays + ']');
+      let workingDays = 1;
       for (let i = 1; i <= noOfDays; i++) {
-        let day = new Date(this.formYear, this.formMonth-1, i).getDay();
+        let day = new Date(this.year, this.month-1, i).getDay();
         if (day != 0 && day != 6 && !skipDays.includes(i)) {
-          this.table += '<tr><td>' + i + '.' + this.formMonth + '.' + this.formYear + '</td>';
-          this.table += '<td>' + this.distance + '</td>';
-          this.table += '<td>' + this.distance + '</td>';
+          this.table += '<tr><td>' + workingDays + '</td><td>' + i +  '.' + this.month + '.' + this.year + '</td>';
+          this.table += '<td>' + this.distanceIn + '</td>';
+          this.table += '<td>' + this.distanceOut + '</td>';
           this.table += '<td>automobil</td><td></td></tr>';
-          this.totalDistance += parseFloat(this.distance);
+          this.totalDistanceIn += parseFloat(this.distanceIn);
+          this.totalDistanceOut += parseFloat(this.distanceOut);
+          workingDays++;
         }
       }
-      this.cost = (this.totalDistance * 2 * 0.75).toFixed(2);
+      this.cost = ((this.totalDistanceIn + this.totalDistanceOut) * 0.75).toFixed(2);
+      this.workingDays = workingDays - 1;
     }
   }
 }
