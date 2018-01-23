@@ -164,7 +164,7 @@ export default {
       let skipDays = JSON.parse('[' + this.skipDays + ']');
       let workingDays = 1;
       for (let i = 1; i <= noOfDays; i++) {
-        let day = new Date(this.year, this.month+1, i).getDay();
+        let day = new Date(this.year, this.month-1, i).getDay();
         if (day != 0 && day != 6 && !skipDays.includes(i)) {
           this.table += '<tr><td>' + workingDays + '</td><td>' + i +  '.' + this.month + '.' + this.year + '</td>';
           this.table += '<td>' + this.distanceIn + '</td>';
