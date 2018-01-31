@@ -82,7 +82,7 @@
             <td><strong>Ukupno KM:</strong></td>
             <td>{{ totalDistanceIn.toFixed(2) }}</td>
             <td>{{ totalDistanceOut.toFixed(2) }}</td>
-            <td><b>{{ (totalDistanceIn + totalDistanceOut).toFixed(2) }} km x 0,75</b></td>
+            <td><b>{{ (totalDistanceIn + totalDistanceOut).toFixed(2) }} km x 1,00</b></td>
             <td><b>= {{ this.cost }} kn</b></td>
           </tr>
           <tr>
@@ -175,7 +175,7 @@ export default {
           workingDays++;
         }
       }
-      this.cost = ((this.totalDistanceIn + this.totalDistanceOut) * 0.75).toFixed(2);
+      this.cost = ((this.totalDistanceIn + this.totalDistanceOut) * 1.00).toFixed(2);
       this.workingDays = workingDays - 1;
     }
   }
